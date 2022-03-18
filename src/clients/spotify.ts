@@ -394,13 +394,13 @@ export class Spotify extends TypedEmitter<SpotifyEvents> {
     );
     authorizeUrl.searchParams.append('response_type', 'code');
     authorizeUrl.searchParams.append('client_id', this.clientId);
-    authorizeUrl.searchParams.append('redirect_uri', 'http://localhost:8082/');
+    authorizeUrl.searchParams.append('redirect_uri', 'http://localhost:3000/');
     authorizeUrl.searchParams.append('scope', 'user-read-currently-playing');
 
     logger.info(`${logPrefix} starting server to wait for code`);
 
     const app = express();
-    const server = app.listen(8082);
+    const server = app.listen(3000);
     let code: string | null = null;
 
     await new Promise<void>((resolve) => {
@@ -429,7 +429,7 @@ export class Spotify extends TypedEmitter<SpotifyEvents> {
     const body = new url.URLSearchParams();
     body.append('grant_type', 'authorization_code');
     body.append('code', code);
-    body.append('redirect_uri', 'http://localhost:8082/');
+    body.append('redirect_uri', 'http://localhost:3000');
 
     const tokenRequest = await fetch('https://accounts.spotify.com/api/token', {
       body,

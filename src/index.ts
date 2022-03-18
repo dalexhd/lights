@@ -1,5 +1,4 @@
 import { Base } from './clients/led/base';
-import { BluetoothLED } from './clients/led';
 import { Mock } from './clients/led/mock';
 import * as Settings from './settings';
 import { Segment, Spotify } from './clients/spotify';
@@ -45,11 +44,7 @@ const main = async (): Promise<void> => {
   for (const lightbulbMACAddress of Settings.Settings.lightbulbMACAddresses) {
     let lightClient: Base;
 
-    if (Settings.Settings.debug) {
-      lightClient = new Mock(lightbulbMACAddress);
-    } else {
-      lightClient = new BluetoothLED(lightbulbMACAddress);
-    }
+    lightClient = new Mock(lightbulbMACAddress);
 
     await lightClient.start();
     lightClients.push(lightClient);
